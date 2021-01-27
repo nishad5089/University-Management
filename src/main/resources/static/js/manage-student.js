@@ -39,6 +39,7 @@ $(document).ready(function() {
                                  <td>${item.name}</td>
                                  <td>${item.depName}</td>
                                  <td>${item.batchName}</td>
+                                 <td>${item.semesterName}</td>
                                  <td class="td-actions text-right">
                                      <button type="button" rel="tooltip" id="mybutton" onclick="myFunc('${item.id}')" class="btn btn-success">
                                      <i class="material-icons">edit</i>
@@ -57,7 +58,7 @@ $(document).ready(function() {
     });
     $("#semesterId").change(function(){
         var id =  $(this).val();
-        alert(id)
+      //  alert(id)
         $.ajax({
             type: 'GET',
             url: "/student/getCourse/" + id,
@@ -68,9 +69,9 @@ $(document).ready(function() {
             success: function(data){
                 var slctSubcat=$('#courseId'), option="";
                 slctSubcat.empty();
-
+                 option = ' <option value="-1" selected label="--Select--"/>';
                 for(var i=0; i<data.length; i++){
-                    option = option + "<option value='"+data[i].id + "'>"+data[i].name + "</option>";
+                    option += "<option value='"+data[i].id + "'>"+data[i].name + "</option>";
                 }
                 slctSubcat.append(option);
             },
@@ -84,7 +85,7 @@ $(document).ready(function() {
         e.preventDefault();
         var data = JSON.stringify($(this).serializeObject());
         var url = '/student/save';
-
+        console.log(data)
         $.ajax({
             data: data,
             url: url,
@@ -99,6 +100,7 @@ $(document).ready(function() {
                                  <td>${resp.name}</td>
                                  <td>${resp.depName}</td>
                                  <td>${resp.batchName}</td>
+                                 <td>${resp.semesterName}</td>
                                  <td class="td-actions text-right">
                                      <button type="button" rel="tooltip" class="btn btn-success">
                                      <i class="material-icons">edit</i>
@@ -120,7 +122,6 @@ $(document).ready(function() {
     $(".form1").on('submit', function(e) {
         e.preventDefault();
         var data = JSON.stringify($(this).serializeObject());
-        console.log("I m from form1 "+data);
         var url = '/student/update';
         $.ajax({
             data: data,
@@ -143,6 +144,7 @@ $(document).ready(function() {
                                  <td>${item.name}</td>
                                  <td>${item.depName}</td>
                                  <td>${item.batchName}</td>
+                                 <td>${item.semesterName}</td>
                                  <td class="td-actions text-right">
                                      <button type="button" rel="tooltip" id="mybutton" onclick="myFunc('${item.id}')" class="btn btn-success">
                                      <i class="material-icons">edit</i>

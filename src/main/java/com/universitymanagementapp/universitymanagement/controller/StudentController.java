@@ -52,29 +52,26 @@ public class StudentController {
             StudentDto studentDto  = new ModelMapper().map(student,StudentDto.class);
             studentDto.setBatchName(student.getBatch().getName());
             studentDto.setDepName(student.getDepartment().getName());
+            studentDto.setSemesterName(student.getSemester().getName());
             studentDtoList.add(studentDto);
         }
         return studentDtoList;
     }
 
-//    @GetMapping("/add")
-//    public String add(Model m) {
-//        m.addAttribute("student", new Student());
-//        m.addAttribute("departmentList", departmentRepository.findAll());
-//        m.addAttribute("batchList", batchRepository.findAll());
-//        return "student/add";
-//    }
-//
+
 @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public @ResponseBody StudentDto saveStudent(@RequestBody StudentDto studentDto) {
     Department department = departmentRepository.getOne(studentDto.getDepId());
+    SessionSemester sessionSemester = sessionSemesterRepository.getOne(studentDto.getSemesterId());
     Batch batch = batchRepository.getOne(studentDto.getBatchId());
     Student student = new ModelMapper().map(studentDto,Student.class);
     student.setBatch(batch);
+    student.setSemester(sessionSemester);
     student.setDepartment(department);
     studentRepository.save(student);
     StudentDto studentDto1 = new ModelMapper().map(student, StudentDto.class);
     studentDto1.setDepName(department.getName());
+    studentDto1.setSemesterName(sessionSemester.getName());
     studentDto1.setBatchName(batch.getName());
     return studentDto1;
 }
@@ -110,6 +107,7 @@ public @ResponseBody StudentDto saveStudent(@RequestBody StudentDto studentDto) 
         Student student = studentRepository.findById(studentDto.getId()).get();
         student.setDepartment(department);
         student.setBatch(batch);
+        student.setSemester(sessionSemesterRepository.getOne(studentDto.getSemesterId()));
         studentRepository.save(student);
         List<Student> studentList = studentRepository.findAll();
         List<StudentDto> studentDtoList = new ArrayList<>();

@@ -98,7 +98,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <select id="semesterId" class="form-control"   title="Select Batach" data-size="7">
+                                            <select id="semesterId" name="semesterId" class="selectpicker" data-style="select-with-transition" title="Select Semester" data-size="7">
                                                 <option disabled> --Select Semester--</option>
                                                 <option th:each="semester : ${semesterList}"
                                                         th:value="${semester.id}"
@@ -108,7 +108,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <select id="courseId" class="form-control"   title="Select Batach" data-size="7">
+                                            <select id="courseId" class="form-control"  title="Select Course" >
 <!--                                                <option disabled> &#45;&#45;Select Course&#45;&#45;</option>-->
                                                 <option value="-1" label="--Select--"/>
                                             </select>
@@ -134,6 +134,7 @@
                                             <th>Name</th>
                                             <th>Department</th>
                                             <th>Batch</th>
+                                            <th>Semester</th>
                                             <th class="text-right">Actions</th>
                                         </tr>
                                         </thead>

@@ -58,6 +58,14 @@ public class Student implements Serializable {
 
     @OneToOne(mappedBy = "student")
     private Enrollment enrollment;
+
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.DETACH,
+                    CascadeType.REFRESH})
+    @JoinColumn(name = "semester_id")
+    private SessionSemester semester;
 //
 ////    @ManyToMany(fetch = FetchType.LAZY,
 ////            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
